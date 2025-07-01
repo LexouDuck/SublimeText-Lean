@@ -1,2 +1,2 @@
 # SublimeText-Lean
-Lean4 support for SublimeText3
+[Lean](https://lean-lang.org/) support for [Sublime Text](https://www.sublimetext.com/)
