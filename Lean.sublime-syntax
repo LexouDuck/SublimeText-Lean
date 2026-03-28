@@ -120,7 +120,7 @@ contexts:
       scope: keyword.control.conditional.lean
     - match: \b(?<!\.)(begin|do|end|namespace|return|section)(?!\.)\b
       scope: keyword.control.flow.lean
-    - match: \b(?<!\.)(break|continue|for|forall|loop|start)(?!\.)\b
+    - match: \b(?<!\.)(break|continue|for|forall|loop|start|while)(?!\.)\b
       scope: keyword.control.loop.lean
     - match: \b(?<!\.)(exposing|extends|hiding|include|omit|precedence|raw|renaming|reserve|using)(?!\.)\b
       scope: keyword.control.lean
