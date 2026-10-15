@@ -149,6 +149,8 @@ contexts:
       scope: keyword.operator.functor.lean
     - match: '(\|)'
       scope: keyword.operator.comparison.match.lean
+    - match: '(\+\+)'
+      scope: keyword.operator.append.lean
     - match: '([-+*/÷%^√∘])'
       scope: keyword.operator.arithmetic.lean
     - match: '(==|!=|<=|>=|[<>≤≥])'
@@ -171,8 +173,6 @@ contexts:
       scope: keyword.operator.bind.lean
     - match: '([∈∉∩∪⊂⊃⊆⊇\\∖⊔▵])'
       scope: keyword.operator.sets.lean
-    - match: '(\+\+)'
-      scope: keyword.operator.append.lean
     - match: '(::|<\||\|>)'
       scope: keyword.operator.other.lean
     - match: '(?<=\s)(_)(?=\s)'
