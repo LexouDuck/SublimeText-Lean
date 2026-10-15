@@ -221,6 +221,15 @@ contexts:
     - match: '\b[smf]!(?=")'
       scope: storage.type.string.lean
       push: string-interpolated-begin
+    - match: '\b(r)((#*)")'
+      captures:
+        1: storage.type.string.lean
+        2: string.quoted.double.raw.lean punctuation.definition.string.begin.lean
+      push:
+        - meta_content_scope: string.quoted.double.raw.lean
+        - match: '"\3'
+          scope: string.quoted.double.raw.lean punctuation.definition.string.end.lean
+          pop: true
     - match: '"'
       captures:
         0: punctuation.definition.string.begin.lean
