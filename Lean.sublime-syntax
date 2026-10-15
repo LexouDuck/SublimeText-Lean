@@ -214,10 +214,13 @@ contexts:
           pop: true
     - match: '`+[^\[(]\S+'
       scope: entity.name.lean
-    - match: '\b[^:«»\(\)\{\}\[\]⟨⟩[:space:]=→λ∀?][^:«»\(\)\{\}\[\]⟨⟩[:space:]]*'
+    - match: '\b[^:«»\(\)\{\}\[\]⟨⟩[:space:]=→λ∀?"][^:«»\(\)\{\}\[\]⟨⟩[:space:]"]*'
       scope: entity.name.lean
 
   string:
+    - match: '\b[smf]!(?=")'
+      scope: storage.type.string.lean
+      push: string-interpolated-begin
     - match: '"'
       captures:
         0: punctuation.definition.string.begin.lean
@@ -227,18 +230,48 @@ contexts:
           captures:
             0: punctuation.definition.string.end.lean
           pop: true
-        - match: '\\[\\"nt'']'
-          scope: constant.character.escape.lean
-        - match: '\\x[0-9A-Fa-f][0-9A-Fa-f]'
-          scope: constant.character.escape.lean
-        - match: '\\u[0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f]'
-          scope: constant.character.escape.lean
+        - include: string-escape
     - match: '''[^\\'']'''
       scope: string.quoted.single.lean
     - match: '''(\\(x..|u....|.))'''
       scope: string.quoted.single.lean
       captures:
         1: constant.character.escape.lean
+
+  string-escape:
+    - match: '\\[\\"nrt'']'
+      scope: constant.character.escape.lean
+    - match: '\\x[0-9A-Fa-f][0-9A-Fa-f]'
+      scope: constant.character.escape.lean
+    - match: '\\u[0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f]'
+      scope: constant.character.escape.lean
+
+  string-interpolated-begin:
+    - match: '"'
+      scope: punctuation.definition.string.begin.lean
+      set: string-interpolated-body
+
+  string-interpolated-body:
+    - meta_scope: string.quoted.double.interpolated.lean
+    - match: '"'
+      scope: punctuation.definition.string.end.lean
+      pop: true
+    - match: '\\\{'
+      scope: constant.character.escape.lean
+    - include: string-escape
+    - match: '\{'
+      scope: punctuation.section.interpolation.begin.lean
+      push: string-interpolation
+
+  string-interpolation:
+    - clear_scopes: 1
+    - meta_scope: meta.interpolation.lean
+    - match: '\}'
+      scope: punctuation.section.interpolation.end.lean
+      pop: true
+    - include: comment
+    - include: string
+    - include: expression
 
   constant:
     - match: '\b([0-9]+|0([xX][0-9a-fA-F]+))\b'
